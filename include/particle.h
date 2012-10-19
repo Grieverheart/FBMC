@@ -2,16 +2,17 @@
 #define PARTICLE_H
 
 #include "clam.h"
+#include <vector>
 
 struct Particle{
 	Particle(void):scale(1.0){};
-	~Particle(void){if(vertices) delete vertices;};
+	~Particle(void){};
 	clam::vec3d pos;
 	unsigned int index;
 	double scale;
 	unsigned int type;
 	//This parameter is not used for spheres
-	clam::vec3d *vertices;
+	std::vector<clam::vec3d> vertices;
 };
 
 #endif
