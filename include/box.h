@@ -1,0 +1,1 @@
+#ifndef SIM_BOX_H#define SIM_BOX_H#include "clam.h"class Box: public clam::mat3d{public:	Box(void):		clam::mat3d(){};	Box(double const x):		clam::mat3d(x){};	Box(clam::vec3d const &x, clam::vec3d const &y, clam::vec3d const &z):		clam::mat3d(x, y, z){};	~Box(void){};	double Area(void)const;	double Volume(void)const;};#endif
