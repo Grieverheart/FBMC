@@ -5,9 +5,11 @@
 class Simulation: public simulationBase{
 public:
 	void loop(void){
+		std::string filename = "test.dat";
+		saveConfig(filename);
 	}
 private:
-	unsigned int mcStep_;
+	uint mcStep_;
 };
 
 int main(int argc, char *argv[]){

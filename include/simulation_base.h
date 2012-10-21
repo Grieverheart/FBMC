@@ -6,6 +6,7 @@
 #include "box.h"
 #include "particle.h"
 #include "ptype.h"
+#include "typedefs.h"
 
 class simulationBase{
 public:
@@ -18,8 +19,9 @@ protected:
 	double mtRandd(double x, bool isSymmetric)const;
 	int mtRandi(int x);
 	bool readConfiguration(const char *filepath);
+	void triad(Particle p, double *aa)const;
 	
-	virtual void saveConfig(void){};
+	bool saveConfig(std::string filename)const;
 	virtual void translation(void){};
 	virtual void rotation(void){};
 	virtual void scaling(void){};
@@ -31,7 +33,7 @@ protected:
 	std::vector<clam::vec3i> eil_;
 	std::vector<Particle> particles_;
 	std::vector<Ptype> types_;
-	unsigned int nPart_;
+	uint nPart_;
 	double dr_, dtheta_, dv_;
 	double Rmax_; //Maximum double radius
 	boost::random::mt19937 randGen_;

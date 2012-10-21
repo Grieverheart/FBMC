@@ -3,16 +3,20 @@
 
 #include "particle.h"
 #include "ptype.h"
+#include "box.h"
 
 class CollisionDetector{
 public:
 	CollisionDetector(void);
 	~CollisionDetector(void);
 	void Init(std::vector<Ptype> typesList);
-	bool isColliding(Particle const &a, Particle const &b)const;
+	bool isColliding(Particle a, Particle b, Box box)const;
 private:
-	double* axesCache_;
-	std::vector<Ptype> types;
+	bool gjk_overlap(Particle a, Particle b, Box box)const;
+	//////////////////////////////GJK Helper Function//////////////////////////////
+	clam::vec3d support(Particle a, Particle b, clam::vec3d real_dist, clam::vec3d dir)const;
+	
+	std::vector<Ptype> types_;
 };
 
 #endif
