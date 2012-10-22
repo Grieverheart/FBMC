@@ -7,7 +7,7 @@
 #include "typedefs.h"
 
 struct Ptype{
-	double iscrb_d2, cscrb_d2;
+	double iscrb, cscrb;
 	uint triadV1, triadV2;
 	std::vector<clam::vec3d> vertices;
 	std::vector< std::vector<uint> > vertNeigh;

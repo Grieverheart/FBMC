@@ -1,13 +1,32 @@
 #include "../include/collisionDetection.h"
 #include <iostream>
 
+
 void CollisionDetector::Init(std::vector<Ptype> typesList){
 	types_ = typesList;
 }
 
 bool CollisionDetector::isColliding(Particle a, Particle b, Box box)const{
-	if(types_[a.type].name == "Sphere" && types_[b.type].name == "Sphere") return true;
-	return false;
+	double dist = distance(a.pos, b.pos);
+	if(types_[a.type].name == "Sphere" && types_[b.type].name == "Sphere"){
+		if(dist < a.scale + b.scale) return true;
+		else return false;
+	}
+	else if(types_[a.type].name == "Sphere"){
+		if(dist < a.scale + b.scale * types_[b.type].iscrb) return true;
+		else if(dist > a.scale + b.scale * types_[b.type].cscrb) return false;
+		else return gjk_overlap(a, b, box);
+	}
+	else if(types_[b.type].name == "Sphere"){
+		if(dist < b.scale + a.scale * types_[a.type].iscrb) return true;
+		else if(dist > b.scale + a.scale * types_[a.type].cscrb) return false;
+		else return gjk_overlap(a, b, box);
+	}
+	else{
+		if(dist < b.scale * types_[b.type].iscrb + a.scale * types_[a.type].iscrb) return true;
+		else if(dist > b.scale * types_[b.type].cscrb + a.scale * types_[a.type].cscrb) return false;
+		else return gjk_overlap(a, b, box);
+	}
 }
 
 
@@ -76,19 +95,19 @@ inline clam::vec3d CollisionDetector::support(Particle a, Particle b, clam::vec3
 		double norm = clam::length(dir);
 		for(uint i = 0; i < 3; i++) suppA[i] = a.scale * dir[i] / norm;
 		pb = types_[b.type].poly_min(b.vertices, dir);
-		suppB = b.vertices[pb];
+		for(uint i = 0; i < 3; i++) suppB[i] = b.scale * b.vertices[pb][i];
 	}
 	else if(bName == "Sphere"){
 		double norm = clam::length(dir);
-		for(uint i = 0; i < 3; i++) suppB[i] = b.scale * dir[i] / norm;
+		for(uint i = 0; i < 3; i++) suppB[i] = -b.scale * dir[i] / norm;
 		pa = types_[a.type].poly_max(a.vertices, dir);
-		suppA = a.vertices[pa];
+		for(uint i = 0; i < 3; i++) suppA[i] = a.scale * a.vertices[pa][i];
 	}
 	else{
 		pa = types_[a.type].poly_max(a.vertices, dir);
-		suppA = a.vertices[pa];
+		for(uint i = 0; i < 3; i++) suppA[i] = a.scale * a.vertices[pa][i];
 		pb = types_[b.type].poly_min(b.vertices, dir);
-		suppB = b.vertices[pb];
+		for(uint i = 0; i < 3; i++) suppB[i] = b.scale * b.vertices[pb][i];
 	}
 	
 	clam::vec3d c;
