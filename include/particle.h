@@ -9,7 +9,6 @@ struct Particle{
 	Particle(void):scale(1.0){};
 	~Particle(void){};
 	clam::vec3d pos;
-	uint index;
 	double scale;
 	uint type;
 	//This parameter is not used for spheres

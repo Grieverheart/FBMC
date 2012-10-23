@@ -7,7 +7,6 @@ CC=gcc
 CXXFLAGS=-Wall -O3
 CFLAGS=-Wall -O3 -g -std=c99
 LDFLAGS=
-dSFMTFLAGS=-msse2 -DDSFMT_MEXP=19937 -DHAVE_SSE2
 RM=del /q
 
 vpath %.o bin/

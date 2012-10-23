@@ -6,18 +6,24 @@ class Simulation: public simulationBase{
 public:
 	void loop(void){
 		std::string filename = "test.dat";
-		
-		std::vector<clam::vec3i>::iterator itr;
-		for(itr = sil_.begin(); itr < sil_.end(); itr++){
-			std::cout << (*itr)[0] << ", " << (*itr)[1] << ", " << (*itr)[2] << std::endl;
+		for(mcStep_ = 0; mcStep_ < 10000; mcStep_++){
+			scaling();
+			rotation();
+			translation();
+			deformation();
 		}
-		std::cout << "SIL size: " << sil_.size() << std::endl;
-		std::cout << std::endl;
 		
-		for(itr = eil_.begin(); itr < eil_.end(); itr++){
-			std::cout << (*itr)[0] << ", " << (*itr)[1] << ", " << (*itr)[2] << std::endl;
-		}
-		std::cout << "EIL size: " << eil_.size() << std::endl;
+		// std::vector<clam::vec3i>::iterator itr;
+		// for(itr = sil_.begin(); itr < sil_.end(); itr++){
+			// std::cout << (*itr)[0] << ", " << (*itr)[1] << ", " << (*itr)[2] << std::endl;
+		// }
+		// std::cout << "SIL size: " << sil_.size() << std::endl;
+		// std::cout << std::endl;
+		
+		// for(itr = eil_.begin(); itr < eil_.end(); itr++){
+			// std::cout << (*itr)[0] << ", " << (*itr)[1] << ", " << (*itr)[2] << std::endl;
+		// }
+		// std::cout << "EIL size: " << eil_.size() << std::endl;
 		
 		saveConfig(filename);
 	}

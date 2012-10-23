@@ -13,7 +13,7 @@ public:
 	void Init(std::vector<Ptype> typesList);
 	bool isColliding(Particle a, Particle b, Box box)const;
 private:
-	double distance(clam::vec3d, clam::vec3d)const; //distance squared
+	double distance(clam::vec3d, clam::vec3d, Box box)const; //distance squared
 	bool gjk_overlap(Particle a, Particle b, Box box)const;
 	//////////////////////////////GJK Helper Function//////////////////////////////
 	clam::vec3d support(Particle a, Particle b, clam::vec3d real_dist, clam::vec3d dir)const;
@@ -22,10 +22,12 @@ private:
 };
 
 
-inline double CollisionDetector::distance(clam::vec3d a, clam::vec3d b)const{
+inline double CollisionDetector::distance(clam::vec3d a, clam::vec3d b, Box box)const{
 	clam::vec3d distance;
+	clam::vec3d result;
 	for(uint i = 0; i < 3; i++) distance[i] = a[i] - b[i];
-	return clam::length(distance);
+	for(uint i = 0; i < 3; i++) result[i] = clam::dot(box.Row(i), distance);
+	return clam::length(result);
 }
 
 #endif

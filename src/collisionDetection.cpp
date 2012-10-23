@@ -7,7 +7,7 @@ void CollisionDetector::Init(std::vector<Ptype> typesList){
 }
 
 bool CollisionDetector::isColliding(Particle a, Particle b, Box box)const{
-	double dist = distance(a.pos, b.pos);
+	double dist = distance(a.pos, b.pos, box);
 	if(types_[a.type].name == "Sphere" && types_[b.type].name == "Sphere"){
 		if(dist < a.scale + b.scale) return true;
 		else return false;
@@ -125,9 +125,9 @@ static bool containsOrigin(Simplex &s, clam::vec3d &dir){
 	//	Minkowski sum. 							 //
 	///////////////////////////////////////////////
 	clam::vec3d a = s[s.size() - 1]; 
-	clam::vec3d b = s[s.size() - 2]; 
 	if(s.size() == 4){
 		/* Tetrahedron Case */
+		clam::vec3d b = s[2]; 
 		clam::vec3d c = s[1]; //[dcba]
 		clam::vec3d d = s[0]; 
 		clam::vec3d ab, ac, ad; 
@@ -194,6 +194,7 @@ static bool containsOrigin(Simplex &s, clam::vec3d &dir){
 	}
 	else if(s.size() == 3){
 		/* Triangle Case */
+		clam::vec3d b = s[1]; 
 		clam::vec3d c = s[0]; //[cba]
 		clam::vec3d ab, ac; 
 		clam::vec3d abPerp, acPerp; 
@@ -223,6 +224,7 @@ static bool containsOrigin(Simplex &s, clam::vec3d &dir){
 	}
 	else if(s.size() == 2){
 		/*Line Case*/
+		clam::vec3d b = s[0]; 
 		clam::vec3d ab, abPerp; 
 		for(uint i = 0; i < 3; i++){
 			ab[i] = b[i] - a[i]; 
@@ -233,7 +235,7 @@ static bool containsOrigin(Simplex &s, clam::vec3d &dir){
 	else{
 		/*Point Case*/
 		for(uint i = 0; i < 3; i++){
-			dir[i] = -a[i]; 
+			dir[i] = -a[i];
 		}
 		return false; 
 	}
@@ -248,7 +250,7 @@ bool CollisionDetector::gjk_overlap(Particle a, Particle b, Box box)const{
 	clam::vec3d dir; 
 	Simplex S;
 	
-	dir = clam::vec3d(1.0, 0.0, 0.0); 
+	dir = a.vertices[0]; 
 	
 	uint fail_safe  =  0; 
 	while(fail_safe < 30){
@@ -257,7 +259,6 @@ bool CollisionDetector::gjk_overlap(Particle a, Particle b, Box box)const{
 		
 		clam::vec3d suppVec = support(a, b, real_distance, dir);
 		S.push_back(suppVec);
-		
 		if(clam::dot(S.back(), dir) < 0.0) return false; 
 		else if(containsOrigin(S, dir))return true; 
 	}
