@@ -19,7 +19,7 @@ public:
 protected:
 	double mtRandd(double x, bool isSymmetric)const;
 	int mtRandi(int x);
-	bool saveConfig(std::string filename)const;
+	bool printConfig(std::string filename)const;
 	void latticeReduction(double);
 	
 	bool translation(void);

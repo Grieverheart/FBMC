@@ -6,11 +6,13 @@ class Simulation: public simulationBase{
 public:
 	void loop(void){
 		std::string filename = "test.dat";
-		for(mcStep_ = 0; mcStep_ < 10000; mcStep_++){
+		bp_ = 0.2;
+		for(mcStep_ = 0; mcStep_ < 50000; mcStep_++){
 			scaling();
 			rotation();
 			translation();
 			deformation();
+			bp_+=0.002;
 		}
 		
 		// std::vector<clam::vec3i>::iterator itr;
@@ -25,7 +27,8 @@ public:
 		// }
 		// std::cout << "EIL size: " << eil_.size() << std::endl;
 		
-		saveConfig(filename);
+		printConfig(filename);
+		std::cout << "Final Volume: " << box_.Volume() << std::endl;
 	}
 private:
 	uint mcStep_;
