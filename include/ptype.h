@@ -12,6 +12,7 @@ struct Ptype{
 	std::vector<clam::vec3d> vertices;
 	std::vector< std::vector<uint> > vertNeigh;
 	std::string name;
+	double scale; //This is just to hold the scale; In principle it is scaled as soon as it is read
 	
 	uint poly_max(std::vector<clam::vec3d> vertices, clam::vec3d axis)const;
 	uint poly_min(std::vector<clam::vec3d> vertices, clam::vec3d axis)const;

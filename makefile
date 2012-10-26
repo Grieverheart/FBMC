@@ -4,7 +4,7 @@ EXE=main.exe
 
 CXX=g++
 CC=gcc
-CXXFLAGS=-Wall -O3
+CXXFLAGS=-Wall -O3 -std=c++0x
 CFLAGS=-Wall -O3 -g -std=c99
 LDFLAGS=
 RM=del /q
