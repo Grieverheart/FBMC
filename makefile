@@ -1,12 +1,12 @@
 SRC=$(wildcard src/*.cpp)
 OBJ=$(patsubst src/%.cpp, bin/%.o, $(SRC))
-EXE=main.exe
+EXE=fbmcSimulation.dll
 
 CXX=g++
 CC=gcc
-CXXFLAGS=-Wall -O3 -std=c++0x
+CXXFLAGS=-Wall -O3 -std=c++0x -D DLL_EXPORT
 CFLAGS=-Wall -O3 -g -std=c99
-LDFLAGS=
+LDFLAGS=-shared -Wl,--out-implib,libfbmcSimulation.a
 RM=del /q
 
 vpath %.o bin/

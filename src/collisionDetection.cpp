@@ -250,7 +250,7 @@ bool CollisionDetector::gjk_overlap(Particle a, Particle b, Box box)const{
 	clam::vec3d dir; 
 	Simplex S;
 	
-	dir = a.vertices[0]; 
+	dir = clam::vec3d(1.0, 1.0, 1.0); 
 	
 	uint fail_safe  =  0; 
 	while(fail_safe < 30){
@@ -262,7 +262,8 @@ bool CollisionDetector::gjk_overlap(Particle a, Particle b, Box box)const{
 		if(clam::dot(S.back(), dir) < 0.0) return false; 
 		else if(containsOrigin(S, dir))return true; 
 	}
-	std::cout << "Encountered error in GJK: Infinite Loop.\n Direction (" << dir[0] << ", " << dir[1] << ", " << dir[2] << std::endl; 
+	std::cout << "Encountered error in GJK: Infinite Loop.\n Direction (" << dir[0] << ", " << dir[1] << ", " << dir[2] << ")" << std::endl; 
+	std::cout << "Dot product is " << clam::dot(S.back(), dir) << std::endl;
 	for(uint i = 0;  i  <  S.size();  i++){
 		std::cout << S[i][0] << "\t" <<  S[i][1] << "\t" << S[i][2] << std::endl; 
 	}
