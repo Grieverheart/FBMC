@@ -1,0 +1,9 @@
+#Ignore File
+*.o
+*.out
+*.exe
+*.dat
+*.csv
+*.dll
+*.a
+/Data

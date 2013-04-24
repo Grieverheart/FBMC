@@ -215,7 +215,7 @@ namespace clam{
 		for(int i = 0; i < 3; i++){
 			for(int k = 0; k < 3; k++){
 				for(int j = 0; j < 3; j++){
-					result[3*k+i] += a[3*j+i] * b[3*k+j];   
+					result[3*k+i] += a[3*k+j] * b[3*j+i];   
 				}
 			}
 		}

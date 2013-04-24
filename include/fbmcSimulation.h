@@ -2,17 +2,15 @@
 #define SIMULATION_BASE_H
 
 #ifdef __WIN32
-
-#ifdef DLL_EXPORT
-#define FBMCAPI __declspec(dllexport)
+	#ifdef DLL_EXPORT
+		#define FBMCAPI __declspec(dllexport)
+	#else
+		#define FBMCAPI __declspec(dllimport)
+	#endif
 #else
-#define FBMCAPI __declspec(dllimport)
+	#define FBMCAPI
 #endif
 
-#else
-#define FBMCAPI
-
-#endif
 #include <memory>
 
 namespace fbmc{
@@ -37,6 +35,7 @@ namespace fbmc{
 		bool scaling(void);
 		bool deformation(void);
 		void latticeReduction(double);
+		void scaleBox(double); //only factors > 1
 		
 		//Utility functions
 		double mtRandd(double x, bool isSymmetric)const;
